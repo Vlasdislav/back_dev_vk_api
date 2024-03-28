@@ -20,8 +20,8 @@ class User {
     // Метод для создания нового пользователя
     function create() {
         // Запрос для добавления нового пользователя в БД
-        $query = "INSERT INTO " . $this->table_name . "
-                SET
+        $query = "insert into " . $this->table_name . "
+                set
                     firstname = :firstname,
                     lastname  = :lastname,
                     email     = :email,
@@ -55,9 +55,9 @@ class User {
     // Проверка, существует ли электронная почта в нашей базе данных
     function emailExists() {
         // Запрос, чтобы проверить, существует ли электронная почта
-        $query = "SELECT id, firstname, lastname, password
-                FROM " . $this->table_name . "
-                WHERE email = ?
+        $query = "select id, firstname, lastname, password
+                from " . $this->table_name . "
+                where email = ?
                 LIMIT 0,1";
     
         // Подготовка запроса
@@ -98,13 +98,13 @@ class User {
         $password_set =! empty($this->password) ? ", password = :password" : "";
     
         // Если не введен пароль - не обновлять пароль
-        $query = "UPDATE " . $this->table_name . "
-                SET
+        $query = "update " . $this->table_name . "
+                set
                     firstname = :firstname,
                     lastname  = :lastname,
                     email     = :email
                     {$password_set}
-                WHERE id = :id";
+                where id = :id";
     
         // Подготовка запроса
         $stmt = $this->conn->prepare($query);
@@ -130,10 +130,9 @@ class User {
         $stmt->bindParam(":id", $this->id);
     
         // Если выполнение успешно, то информация о пользователе будет сохранена в базе данных
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return true;
         }
-    
         return false;
     }
 }

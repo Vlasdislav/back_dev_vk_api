@@ -1,4 +1,5 @@
 jQuery($ => {
+    showLoggedOutMenu();
     // Показ формы регистрации
     $(document).on("click", "#sign_up", () => {
         let html = `
@@ -39,7 +40,7 @@ jQuery($ => {
 
         // Отправка данных формы в API
         $.ajax({
-            url: "/back_dev_vk_api/authentication-jwt/api/create_user.php",
+            url: "/back_dev_vk_api/api/create_user.php",
             type: "POST",
             contentType: "application/json",
             data: form_data,
@@ -70,7 +71,7 @@ jQuery($ => {
 
         // Отправка данных формы в API
         $.ajax({
-            url: "/back_dev_vk_api/authentication-jwt/api/login.php",
+            url: "/back_dev_vk_api/api/login.php",
             type: "POST",
             contentType: "application/json",
             data: form_data,
@@ -122,7 +123,7 @@ jQuery($ => {
 
         // Отправка данных формы в API
         $.ajax({
-            url: "/back_dev_vk_api/authentication-jwt/api/update_user.php",
+            url: "/back_dev_vk_api/api/update_user.php",
             type: "POST",
             contentType: "application/json",
             data: form_data,
@@ -188,7 +189,7 @@ jQuery($ => {
     // Валидация JWT для проверки доступа
         const jwt = getCookie("jwt");
 
-        $.post("/back_dev_vk_api/authentication-jwt/api/validate_token.php", JSON.stringify({ jwt: jwt })).done(result => {
+        $.post("/back_dev_vk_api/api/validate_token.php", JSON.stringify({ jwt: jwt })).done(result => {
 
             // если прошел валидацию, показать домашнюю страницу
             let html = `
@@ -229,15 +230,14 @@ jQuery($ => {
 
     // Если пользователь авторизован
     function showLoggedInMenu() {
-        // Скроем кнопки входа и регистрации с панели навигации и покажем кнопку выхода
         $("#login, #sign_up").hide();
-        $("#logout, #add_announcement").show();
+        $("#logout, #add_announcement, #update_account").show();
     }
 
     function showUpdateAccountForm() {
         // Валидация JWT для проверки доступа
         const jwt = getCookie("jwt");
-        $.post("/back_dev_vk_api/authentication-jwt/api/validate_token.php", JSON.stringify({ jwt: jwt })).done(result => {
+        $.post("/back_dev_vk_api/api/validate_token.php", JSON.stringify({ jwt: jwt })).done(result => {
 
             // Если валидация прошла успешно, покажем данные пользователя в форме
             let html = `
@@ -289,9 +289,8 @@ jQuery($ => {
 
     // Эта функция сделает меню похожим на опции для пользователя, вышедшего из системы.
     function showLoggedOutMenu() {
-        // Показать кнопку входа и регистрации в меню навигации
         $("#login, #sign_up").show();
-        $("#logout. #add_announcement").hide();
+        $("#logout, #add_announcement, #update_account").hide();
     }
 
     // Функция показывает HTML-форму для входа в систему.
@@ -345,7 +344,39 @@ jQuery($ => {
         });
         return o;
     };
-
+    // ------------------------------------
+    // ------------------------------------
+    // POSTS
+    // ------------------------------------
+    // ------------------------------------
+    const getPosts = async () => {
+        let res = await fetch("TODO: link");
+        let posts = await res.json();
+        return posts;
+    }
+    
+    const showPosts = () => {
+        const postsHtml = $('.posts-list');
+        getPosts().then(posts => {
+            postsHtml.innerHTML = '';
+            posts.forEach(post => {
+                postsHtml.innerHTML += `
+                    <div class="col post-list" style="margin-top: 10px;">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">${post.title}</h5>
+                                <img src=${post.img}>
+                                <p class="card-text">${post.text}</p>
+                                <span>${post.price}</span>
+                                <a href="#" class="card-link">Подробнее</a>
+                                <a href="#" class="card-link" onclick="removePost(${post.id})">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                `
+            });
+        })
+    }
     // // Показать все объявления
     // $(document).on("click", "#announcements", () => {
     //     showAnnouncementsPage();

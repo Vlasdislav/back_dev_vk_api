@@ -11,7 +11,7 @@
     <!-- Навигация -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Навигация</a>
+            <a class="navbar-brand" href="#">Home</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,8 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="javascript:void(0);" id="home">Домашняя страница</a>
                     <a class="nav-item nav-link" href="javascript:void(0);" id="announcements">Объявления</a>
-                    <a class="nav-item nav-link" href="javascript:void(0);" id="add_announcement">Учетная запись</a>
+                    <a class="nav-item nav-link" href="javascript:void(0);" id="add_announcement">Добавить объявление</a>
+                    <a class="nav-item nav-link" href="javascript:void(0);" id="update_account">Учетная запись</a>
                     <a class="nav-item nav-link" href="javascript:void(0);" id="logout">Выход</a>
                     <a class="nav-item nav-link" href="javascript:void(0);" id="login">Вход</a>
                     <a class="nav-item nav-link" href="javascript:void(0);" id="sign_up">Регистрация</a>
@@ -31,10 +32,15 @@
     <main role="main" class="container starter-template">
         <div class="row">
             <div class="col">
-                <!-- Здесь будут подсказки / быстрые сообщения -->
-                <div id="response"></div>
-                <!-- Здесь появится основной контент -->
-                <div id="content"></div>
+                <div id="response">
+                    <!-- ALERT -->
+                </div>
+                <div id="content">
+                    <!-- CONTENT -->
+                </div>
+                <div id="posts" class="container row align-items-start mt-5 posts-list">
+                    <!-- POSTS -->
+                </div>
             </div>
         </div>
     </main>
